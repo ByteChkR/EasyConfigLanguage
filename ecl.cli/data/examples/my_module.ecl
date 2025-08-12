@@ -1,0 +1,5 @@
+name = "my-module"
+version = "1.0.0"
+description = "An example module."
+author.name = "Tim Akermann"
+author.email = "tim.akermann@ewu-it.de"

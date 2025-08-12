@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ecl.core.Tokens;
+using ecl.core.Tokens.Containers;
+using ecl.lang.Expressions;
+using ecl.lang.Interpreter;
+using ecl.lang.Parser;
+using ecl.merge;
+
+namespace ecl.lang
+{
+    public class EclLoader
+    {
+        private readonly EclInterpreterFunctions _functions;
+
+        public EclLoader() : this(EclInterpreterFunctions.Default)
+        {
+        }
+        public EclLoader(EclInterpreterFunctions functions)
+        {
+            _functions = functions;
+        }
+
+        public static EclToken FromSource(string name, string src)
+        {
+            var source = new EclSource(name, src);
+            var loader = new EclLoader();
+            return loader.Load([source]);
+        }
+
+        public static EclToken FromFile(string file)
+        {
+            var source = new EclSource(file, File.ReadAllText(file));
+            var loader = new EclLoader();
+            return loader.Load([source]);
+        }
+
+        internal EclToken Load(EclSource[] source)
+        {
+            List<EclToken> mergeList = new List<EclToken>();
+            foreach (var s in source)
+            {
+                var reader = new EclSourceReader(s);
+                var parser = new EclSourceParser(reader, _functions);
+                var result = parser.Parse().ToList();
+                EclInterpreterContext ctx = new EclInterpreterContext(_functions);
+                EclExpression expr;
+                if (result.All(x => x is EclAssignmentExpression))
+                {
+                    expr = new EclObjectExpression(s.Span, result);
+                }
+                else if (result.Count != 1)
+                {
+                    expr = new EclArrayExpression(s.Span, result);
+                }
+                else
+                {
+                    expr = result[0];
+                }
+
+
+                mergeList.Add(expr.Execute(ctx));
+            }
+
+            var resultToken = mergeList.First();
+            for (int i = 1; i < mergeList.Count; i++)
+            {
+                resultToken = EclMerge.Merge(resultToken, mergeList[i]);
+            }
+            
+            return resultToken;
+        }
+    }
+}

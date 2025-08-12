@@ -1,0 +1,1 @@
+MyModule = @load("data/examples/my_module.ecl")
