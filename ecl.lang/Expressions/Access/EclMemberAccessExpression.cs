@@ -4,7 +4,7 @@ using ecl.core.Tokens;
 using ecl.core.Tokens.Containers;
 using ecl.lang.Interpreter;
 
-namespace ecl.lang.Expressions;
+namespace ecl.lang.Expressions.Access;
 
 internal class EclMemberAccessExpression : EclLValueExpression
 {

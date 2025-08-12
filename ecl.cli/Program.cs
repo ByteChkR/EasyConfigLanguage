@@ -1,4 +1,5 @@
-﻿using ecl.json;
+﻿using ecl.cli.Commands;
+using ecl.json;
 using ecl.lang;
 
 namespace ecl.cli;

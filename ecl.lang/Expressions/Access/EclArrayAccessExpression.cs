@@ -5,7 +5,7 @@ using ecl.core.Tokens.Containers;
 using ecl.core.Tokens.Literals;
 using ecl.lang.Interpreter;
 
-namespace ecl.lang.Expressions;
+namespace ecl.lang.Expressions.Access;
 
 internal class EclArrayAccessExpression : EclLValueExpression
 {

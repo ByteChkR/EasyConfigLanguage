@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using ecl.core.Tokens;
 using ecl.core.Tokens.Literals;
 using ecl.lang.Expressions;
+using ecl.lang.Expressions.Access;
 using ecl.lang.Interpreter;
 
 namespace ecl.lang.Parser;

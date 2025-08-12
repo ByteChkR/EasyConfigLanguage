@@ -2,7 +2,7 @@ using System.CodeDom.Compiler;
 using ecl.core.Tokens;
 using ecl.lang.Interpreter;
 
-namespace ecl.lang.Expressions;
+namespace ecl.lang.Expressions.Access;
 
 internal class EclIdentifierExpression : EclLValueExpression
 {

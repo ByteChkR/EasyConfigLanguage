@@ -1,4 +1,4 @@
-namespace ecl.cli;
+namespace ecl.cli.Commands;
 
 internal class EclHelpCommand : EclCommand
 {

@@ -1,3 +1,5 @@
+using ecl.cli.Commands;
+
 namespace ecl.cli;
 
 internal class EclCommands
