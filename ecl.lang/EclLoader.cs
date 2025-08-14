@@ -23,21 +23,9 @@ namespace ecl.lang
             _functions = functions;
         }
 
-        public static EclToken FromSource(string name, string src)
-        {
-            var source = new EclSource(name, src);
-            var loader = new EclLoader();
-            return loader.Load([source]);
-        }
-
-        public static EclToken FromFile(string file)
-        {
-            var source = new EclSource(file, File.ReadAllText(file));
-            var loader = new EclLoader();
-            return loader.Load([source]);
-        }
-
-        internal EclToken Load(EclSource[] source)
+        public static EclToken Load(params IEnumerable<EclSource> sources) => new EclLoader().Load(sources.ToArray());
+        
+        public EclToken Load(EclSource[] source)
         {
             List<EclToken> mergeList = new List<EclToken>();
             foreach (var s in source)

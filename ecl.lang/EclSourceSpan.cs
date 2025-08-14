@@ -1,6 +1,6 @@
 namespace ecl.lang
 {
-    internal struct EclSourceSpan
+    public struct EclSourceSpan
     {
         public EclSourceSpan(EclSource source, int index, int length)
         {

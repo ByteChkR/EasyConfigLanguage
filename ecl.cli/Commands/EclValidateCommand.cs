@@ -1,20 +1,21 @@
 namespace ecl.cli.Commands;
 
-internal class EclValidateCommand : EclCommand
+internal class EclValidateCommand : EclCommand<EclValidateCommandOptions>
 {
     public EclValidateCommand() : base("validate", "Validate ECL files and display their parsed structure.")
     {
     }
 
-    public override void Run(string[] args)
+    public override void Run(EclValidateCommandOptions args)
     {
-        if (args.Length == 0)
+        var files = args.InputFiles.ToArray();
+        if (files.Length == 0)
         {
             Console.WriteLine("Please provide the path to an ECL file to validate.");
             return;
         }
 
-        foreach (var file in EclCliUtils.ExpandPatterns(args))
+        foreach (var file in EclCliUtils.ExpandPatterns(files))
         {
             Console.WriteLine(EclValidate.GetReport(file));
         }

@@ -19,7 +19,7 @@ internal class EclValidate
 
     public static string GetReport(string file)
     {
-        var result = EclLoader.FromFile(file);
+        var result = EclLoader.Load(EclSource.FromFile(file));
         var sw = new StringWriter(CultureInfo.InvariantCulture);
         using (var writer = new IndentedTextWriter(sw, "|   "))
         {

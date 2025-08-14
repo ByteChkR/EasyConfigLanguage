@@ -20,7 +20,7 @@ public class EclLoadFileFunction : EclInterpreterFunction
             {
                 throw new FileNotFoundException($"File not found: {file.Value}", file.Value);
             }
-            sources.Add(new EclSource(file.Value, File.ReadAllText(file.Value)));
+            sources.Add(EclSource.FromFile(file.Value));
         }
 
         return new EclLoader(caller.Functions).Load(sources.ToArray());
