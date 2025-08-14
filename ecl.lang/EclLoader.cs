@@ -8,9 +8,33 @@ using ecl.lang.Expressions;
 using ecl.lang.Interpreter;
 using ecl.lang.Parser;
 using ecl.merge;
+using Microsoft.Extensions.FileSystemGlobbing;
 
 namespace ecl.lang
 {
+    
+    public class EclUtils
+    {
+        public static IEnumerable<string> ExpandPatterns(params string[] patterns)
+        {
+            var matcher = new Matcher();
+            foreach (var pattern in patterns)
+            {
+                if (pattern.StartsWith("!"))
+                {
+                    matcher.AddInclude(pattern.Substring(1));
+                }
+                else
+                {
+                    matcher.AddInclude(pattern);
+                }
+            }
+        
+            var files = matcher.GetResultsInFullPath(Directory.GetCurrentDirectory());
+            return files;
+        }
+    }
+    
     public class EclLoader
     {
         private readonly EclInterpreterFunctions _functions;

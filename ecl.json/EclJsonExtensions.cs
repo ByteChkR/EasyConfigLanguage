@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using ecl.core.Tokens;
 using ecl.core.Tokens.Containers;
 using ecl.core.Tokens.Literals;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace ecl.json;
@@ -116,5 +119,23 @@ public static class EclJsonExtensions
     public static JValue ToJToken(this EclLiteral literal)
     {
         return ToJValue(literal);
+    }
+
+    public static string ToYamlString(this JToken token)
+    {
+        var expConverter = new ExpandoObjectConverter();
+        dynamic deserializedObject;
+        if(token is JArray)
+        {
+            deserializedObject = JsonConvert.DeserializeObject<List<object>>(token.ToString(Formatting.Indented), expConverter)!;
+        }
+        else
+        {
+            deserializedObject = JsonConvert.DeserializeObject<ExpandoObject>(token.ToString(Formatting.Indented), expConverter)!;
+        }
+
+        var serializer = new YamlDotNet.Serialization.Serializer();
+        string yaml = serializer.Serialize(deserializedObject);
+        return yaml;
     }
 }

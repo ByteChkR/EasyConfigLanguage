@@ -1,3 +1,5 @@
+using ecl.lang;
+
 namespace ecl.cli.Commands;
 
 internal class EclValidateCommand : EclCommand<EclValidateCommandOptions>
@@ -11,13 +13,13 @@ internal class EclValidateCommand : EclCommand<EclValidateCommandOptions>
         var files = args.InputFiles.ToArray();
         if (files.Length == 0)
         {
-            Console.WriteLine("Please provide the path to an ECL file to validate.");
+            Logger.Error("Please provide the path to an ECL file to validate.");
             return;
         }
 
-        foreach (var file in EclCliUtils.ExpandPatterns(files))
+        foreach (var file in EclUtils.ExpandPatterns(files))
         {
-            Console.WriteLine(EclValidate.GetReport(file));
+            Logger.Info(EclValidate.GetReport(file));
         }
     }
 }

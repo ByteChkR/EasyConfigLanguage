@@ -22,7 +22,7 @@ internal class EclCommands
         var command = _commands.FirstOrDefault(c => c.Name.Equals(commandName, StringComparison.OrdinalIgnoreCase));
         if (command == null)
         {
-            Console.WriteLine($"Unknown command: {commandName}");
+            Logger.Error($"Unknown command: {commandName}");
             return;
         }
         command.Run(args);
@@ -30,10 +30,10 @@ internal class EclCommands
 
     public void ShowHelp()
     {
-        Console.WriteLine("Available commands:");
+        Logger.Info("Available commands:");
         foreach (var command in _commands)
         {
-            Console.WriteLine($"\t{command.Name} - {command.Description}");
+            Logger.Info($"\t{command.Name} - {command.Description}");
         }
     }
 }

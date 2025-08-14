@@ -6,8 +6,16 @@ using Newtonsoft.Json;
 
 namespace ecl.cli;
 
+internal class EclValidationSettings
+{
+    public bool DisplayOriginal { get; set; } = true;
+    public bool DisplayJson { get; set; } = true;
+    public bool DisplayYaml { get; set; } = true;
+    public bool DisplayEcl { get; set; } = true;
+}
 internal class EclValidate
 {
+    private static EclValidationSettings Settings => Program.Settings.GetToken("Commandline").GetToken("Commands").GetToken("Validate").ToObject<EclValidationSettings>() ?? new EclValidationSettings();
     private static void WriteIndented(IndentedTextWriter tw, string str)
     {
         var lines = str.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
@@ -25,21 +33,40 @@ internal class EclValidate
         {
             writer.WriteLine("Results for " + file);
             writer.Indent++;
-            writer.WriteLine("Original:");
-            writer.Indent++;
-            WriteIndented(writer, File.ReadAllText(file));
-            writer.Indent--;
-            writer.WriteLine();
-            writer.WriteLine("Parsed(ECL):");
-            writer.Indent++;
-            WriteIndented(writer, result.GetDebugString());
-            ;
-            writer.Indent--;
-            writer.WriteLine();
-            writer.WriteLine("Parsed(JSON):");
-            writer.Indent++;
-            WriteIndented(writer, result.ToJToken().ToString(Formatting.Indented));
-            writer.Indent--;
+            if (Settings.DisplayOriginal)
+            {
+                writer.WriteLine("Original:");
+                writer.Indent++;
+                WriteIndented(writer, File.ReadAllText(file));
+                writer.Indent--;
+                writer.WriteLine();
+            }
+
+            if (Settings.DisplayEcl)
+            {
+                writer.WriteLine("Parsed(ECL):");
+                writer.Indent++;
+                WriteIndented(writer, result.GetDebugString());
+                writer.Indent--;
+                writer.WriteLine();
+            }
+            
+
+            if (Settings.DisplayJson)
+            {
+                writer.WriteLine("Parsed(JSON):");
+                writer.Indent++;
+                WriteIndented(writer, result.ToJToken().ToString(Formatting.Indented));
+                writer.Indent--;
+            }
+            
+            if (Settings.DisplayYaml)
+            {
+                writer.WriteLine("Parsed(YAML):");
+                writer.Indent++;
+                WriteIndented(writer, result.ToJToken().ToYamlString());
+                writer.Indent--;
+            }
         }
 
         var str = sw.ToString();
