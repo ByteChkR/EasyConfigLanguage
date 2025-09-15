@@ -12,6 +12,8 @@
       <ProjectReference Include="..\ecl.core\ecl.core.csproj" />
       <ProjectReference Include="..\ecl.json\ecl.json.csproj" />
       <ProjectReference Include="..\ecl.lang\ecl.lang.csproj" />
+      <ProjectReference Include="..\ecl.mapper.generator\ecl.mapper.generator\ecl.mapper.generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+      <ProjectReference Include="..\ecl.mapper\ecl.mapper.csproj" />
     </ItemGroup>
 
     <ItemGroup>

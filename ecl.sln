@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecl.lang", "ecl.lang\ecl.la
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecl.merge", "ecl.merge\ecl.merge.csproj", "{D314FAE5-EAB4-45E5-AD20-588F3E9A0D0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecl.mapper", "ecl.mapper\ecl.mapper.csproj", "{8010C018-102D-402C-9A95-0B913FCF0F09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecl.mapper.generator", "ecl.mapper.generator\ecl.mapper.generator\ecl.mapper.generator.csproj", "{24484F7E-D908-4FF5-AAFE-988E8D10667D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{D314FAE5-EAB4-45E5-AD20-588F3E9A0D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D314FAE5-EAB4-45E5-AD20-588F3E9A0D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D314FAE5-EAB4-45E5-AD20-588F3E9A0D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8010C018-102D-402C-9A95-0B913FCF0F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8010C018-102D-402C-9A95-0B913FCF0F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8010C018-102D-402C-9A95-0B913FCF0F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8010C018-102D-402C-9A95-0B913FCF0F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24484F7E-D908-4FF5-AAFE-988E8D10667D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24484F7E-D908-4FF5-AAFE-988E8D10667D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24484F7E-D908-4FF5-AAFE-988E8D10667D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24484F7E-D908-4FF5-AAFE-988E8D10667D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

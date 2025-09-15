@@ -1,12 +1,9 @@
-﻿using ecl.cli.Commands;
+﻿using System.IO.Compression;
+using ecl.cli.Commands;
 using ecl.lang;
 
 namespace ecl.cli;
 
-internal class CommandlineSettings
-{
-    public bool DisplayVersionInfo { get; set; } = true;
-}
 class Program
 {
     public static readonly ProgramSettings Settings;

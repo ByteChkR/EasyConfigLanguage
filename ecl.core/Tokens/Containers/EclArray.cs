@@ -19,7 +19,7 @@ public class EclArray : EclContainer
             return _properties[index];
         }
     }
-    private class EclArrayProperty : EclProperty<EclArray, int>
+    private class EclArrayProperty : EclProperty<EclArray, int>, IEclProperty<int>
     {
         public EclArrayProperty(EclArray parent, int index) : base(parent, index)
         {

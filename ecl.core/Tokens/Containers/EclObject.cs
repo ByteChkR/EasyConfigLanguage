@@ -22,7 +22,7 @@ public class EclObject : EclContainer
             return property;
         }
     }
-    private class EclObjectProperty : EclProperty<EclObject, string>
+    private class EclObjectProperty : EclProperty<EclObject, string>, IEclProperty<string>
     {
 
         public EclObjectProperty(EclObject parent, string key) : base(parent, key)

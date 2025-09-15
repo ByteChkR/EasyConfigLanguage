@@ -14,7 +14,20 @@ public static class EclMerge
 
         foreach (var prop in secondObject.Properties)
         {
-            first[prop.Key].SetValue(prop.GetValue(null));
+            var newValue = prop.GetValue(null);
+            EclToken? oldValue = null;
+            if (first.Properties.Any(x => x.Key == prop.Key))
+            {
+                oldValue = first[prop.Key].GetValue(null);
+            }
+            if (oldValue is EclContainer)
+            {
+                MergeInplace(oldValue, newValue);
+            }
+            else
+            {
+                first[prop.Key].SetValue(prop.GetValue(null));
+            }
         }
     }
     private static void MergeInplace(EclArray first, EclToken second)
@@ -38,10 +51,7 @@ public static class EclMerge
             result[prop.Key].SetValue(prop.GetValue(null));
         }
 
-        foreach (var prop in secondObject.Properties)
-        {
-            result[prop.Key].SetValue(prop.GetValue(null));
-        }
+        MergeInplace(result, secondObject);
 
         return result;
     }
@@ -67,6 +77,22 @@ public static class EclMerge
                 return Merge(obj, second);
             default:
                 throw new NotSupportedException($"Merging is not supported for type {first.GetType().Name}");
+        }
+    }
+    
+    public static void MergeInplace(EclToken first, EclToken second)
+    {
+        //Switch on the type of the first token
+        switch (first)
+        {
+            case EclArray array:
+                MergeInplace(array, second);
+                break;
+            case EclObject obj:
+                MergeInplace(obj, second);
+                break;
+            default:
+                throw new NotSupportedException($"Merging in place is not supported for type {first.GetType().Name}");
         }
     }
 }

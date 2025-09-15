@@ -63,7 +63,9 @@ public static class EclJsonExtensions
         return literal switch
         {
             EclString str => new JValue(str.Value),
-            EclNumber num => new JValue(decimal.Parse(num.Value, CultureInfo.InvariantCulture)),
+            EclNumber num => num.IsInteger
+                ? new JValue(num.AsLong)
+                : new JValue(decimal.Parse(num.Value, CultureInfo.InvariantCulture)),
             EclBoolean boolean => new JValue(boolean.Value),
             EclNull _ => JValue.CreateNull(),
             _ => throw new NotSupportedException($"Unsupported EclLiteral type: {literal.GetType()}")

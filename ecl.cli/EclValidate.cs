@@ -6,13 +6,6 @@ using Newtonsoft.Json;
 
 namespace ecl.cli;
 
-internal class EclValidationSettings
-{
-    public bool DisplayOriginal { get; set; } = true;
-    public bool DisplayJson { get; set; } = true;
-    public bool DisplayYaml { get; set; } = true;
-    public bool DisplayEcl { get; set; } = true;
-}
 internal class EclValidate
 {
     private static EclValidationSettings Settings => Program.Settings.GetToken("Commandline").GetToken("Commands").GetToken("Validate").ToObject<EclValidationSettings>() ?? new EclValidationSettings();
