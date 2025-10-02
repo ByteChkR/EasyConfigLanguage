@@ -17,14 +17,14 @@ public class EclMapperModelBuilder
     public EclMappedEntity GenerateModel(INamedTypeSymbol symbol)
     {
         List<Diagnostic> diagnostics = new List<Diagnostic>();
-        if (!symbol.Implements(EclMapperStaticCode.ECL_OBJECT_MAP))
+        if (symbol.Implements(EclMapperStaticCode.ECL_OBJECT_MAP))
         {
             diagnostics.Add(
                 Diagnostic.Create(
                     new DiagnosticDescriptor(
                         "ECL001",
-                        "Type must explicitly implement EclObjectMap",
-                        "Type {0} must explicitly implement EclObjectMap",
+                        "Type must not explicitly implement EclObjectMap",
+                        "Type {0} must not explicitly implement EclObjectMap",
                         "EclMapper",
                         DiagnosticSeverity.Error,
                         true

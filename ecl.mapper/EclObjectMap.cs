@@ -36,6 +36,7 @@ namespace ecl.mapper
             return Token.ToString();
         }
 
+        [JsonIgnore]
         public EclObject Token { get; }
         static EclObjectMap()
         {

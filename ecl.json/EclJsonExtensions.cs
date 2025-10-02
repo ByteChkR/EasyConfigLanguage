@@ -32,6 +32,7 @@ public static class EclJsonExtensions
             JTokenType.Boolean => value.Value<bool>() ? EclLiteral.True : EclLiteral.False,
             JTokenType.Integer => EclLiteral.CreateNumber(value.ToString(CultureInfo.InvariantCulture)),
             JTokenType.Float => EclLiteral.CreateNumber(value.ToString(CultureInfo.InvariantCulture)),
+            JTokenType.Guid => EclLiteral.CreateString(value.ToString(CultureInfo.InvariantCulture)),
             _ => EclLiteral.CreateString(value.Value<string>()!),
         };
     }

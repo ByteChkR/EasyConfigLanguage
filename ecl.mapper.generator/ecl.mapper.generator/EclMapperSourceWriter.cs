@@ -86,7 +86,7 @@ public class EclMapperSourceWriter
                 tw.WriteLine("{");
                 tw.Indent++;
                 tw.WriteLine($"get => Token[\"{property.PropertyName}\"].GetValue({defaultValue}).ToJToken().ToObject<{property.PropertyType}>();");
-                tw.WriteLine($"set => Token[\"{property.PropertyName}\"].SetValue(JToken.FromObject(value).ToEclToken());");
+                tw.WriteLine($"set => Token[\"{property.PropertyName}\"].SetValue(value != null ? JToken.FromObject(value).ToEclToken() : {defaultValue});");
                 tw.Indent--;
                 tw.WriteLine("}");
             }
