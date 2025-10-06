@@ -77,11 +77,16 @@ internal class EclSourceParser
                     throw new InvalidOperationException("Unterminated string literal.");
                 sb.Append(Regex.Unescape($"\\{Reader.Peek()}"));
             }
+            else if(Reader.Is("}}"))
+            {
+                Reader.Move();
+                sb.Append('}');
+                Reader.Move();
+            }
             else if (Reader.Is('{'))
             {
                 if (Reader.Is("{{"))
                 {
-                    sb.Append(Reader.Peek());
                     Reader.Move();
                     sb.Append(Reader.Peek());
                     Reader.Move();
