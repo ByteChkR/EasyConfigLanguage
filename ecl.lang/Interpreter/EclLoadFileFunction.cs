@@ -26,9 +26,13 @@ public class EclEnvironmentVariableFunction : EclInterpreterFunction
 {
     public override EclToken Invoke(EclInterpreterContext caller, EclToken[] args)
     {
-        if(args.Length != 1)throw new ArgumentException("env function requires exactly one argument (variable name).", nameof(args));
-        var varName = ((EclString)args[0]).Value;
+        if(args.Length < 1 || args.Length > 2)throw new ArgumentException("env function requires exactly one argument (variable name).", nameof(args));
+        var varName = ((EclString)args[0].Dereference()).Value;
         var varValue = Environment.GetEnvironmentVariable(varName);
+        if (string.IsNullOrEmpty(varValue) && args.Length > 1)
+        {
+            return args[1].Dereference();
+        }
         return EclLiteral.CreateString(varValue ?? string.Empty);
     }
 }
