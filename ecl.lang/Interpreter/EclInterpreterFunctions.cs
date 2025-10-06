@@ -9,7 +9,8 @@ public class EclInterpreterFunctions
 
     public static EclInterpreterFunctions Default { get; } = new EclInterpreterFunctions()
         .AddFunction<EclLoadFileFunction>("load")
-        .AddFunction<EclMergeTokenFunction>("merge");
+        .AddFunction<EclMergeTokenFunction>("merge")
+        .AddFunction<EclEnvironmentVariableFunction>("env");
     public EclInterpreterFunctions AddFunction(string name, EclInterpreterFunction function)
     {
         _functions[name] = function;

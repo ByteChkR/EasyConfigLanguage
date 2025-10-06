@@ -58,6 +58,72 @@ internal class EclSourceParser
         var pos = Reader.GetPosition(start);
         return new EclFunctionCallExpression(pos, function, args.ToArray(), methodName);
     }
+
+    private EclExpression ParseFormatString()
+    {
+        //Parse string with this format: $"Hello {name}, you have {count} new messages."
+        // Name and count can be any valid expression
+        var start = Reader.CurrentIndex;
+        Reader.Eat('$');
+        Reader.Eat('"');
+        var parts = new List<EclExpression>();
+        var sb = new StringBuilder();
+        while (!Reader.IsEof() && !Reader.Is('"'))
+        {
+            if (Reader.Is('\\'))
+            {
+                Reader.Move(); // Skip the backslash
+                if (Reader.IsEof())
+                    throw new InvalidOperationException("Unterminated string literal.");
+                sb.Append(Regex.Unescape($"\\{Reader.Peek()}"));
+            }
+            else if (Reader.Is('{'))
+            {
+                if (Reader.Is("{{"))
+                {
+                    sb.Append(Reader.Peek());
+                    Reader.Move();
+                    sb.Append(Reader.Peek());
+                    Reader.Move();
+                    continue;
+                }
+                // Flush current string part
+                if (sb.Length > 0)
+                {
+                    var strPos = Reader.GetPosition(start);
+                    parts.Add(new EclConstantExpression(strPos, EclLiteral.CreateString(sb.ToString())));
+                    sb.Clear();
+                }
+
+                Reader.Move(); // Skip '{'
+                Reader.SkipWhitespace();
+                var expr = ParseValueExpression();
+                parts.Add(expr);
+                Reader.SkipWhitespace();
+                if (Reader.IsEof() || !Reader.Is('}'))
+                    throw new InvalidOperationException("Unterminated expression in format string.");
+                Reader.Move(); // Skip '}'
+            }
+            else
+            {
+                sb.Append(Reader.Peek());
+                Reader.Move();
+            }
+            
+        }
+        
+        if (Reader.IsEof() || !Reader.Is('"'))
+            throw new InvalidOperationException("Unterminated string literal.");
+        Reader.Move(); // Skip the closing quote
+        if (sb.Length > 0)
+        {
+            var strPos = Reader.GetPosition(start);
+            parts.Add(new EclConstantExpression(strPos, EclLiteral.CreateString(sb.ToString())));
+        }
+        var pos = Reader.GetPosition(start);
+        return new EclFormatStringExpression(pos, parts);
+    }
+    
     private EclExpression ParseString()
     {
         //Parse String Literal
@@ -127,7 +193,7 @@ internal class EclSourceParser
         }
 
         if (Reader.Is('"')) return ParseString();
-        
+        if(Reader.Is($"$\"")) return ParseFormatString();
 
         // Try to parse a number
         var numberStart = Reader.CurrentIndex;

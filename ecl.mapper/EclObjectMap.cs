@@ -14,7 +14,6 @@ namespace ecl.mapper
     {
         protected static readonly JsonSerializerSettings SerializerSettings;
 
-
         protected EclObjectMap()
         {
             Token = new EclObject();

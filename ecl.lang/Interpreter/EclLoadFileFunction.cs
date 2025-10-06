@@ -21,3 +21,14 @@ public class EclLoadFileFunction : EclInterpreterFunction
         return new EclLoader(caller.Functions).Load(sources.ToArray());
     }
 }
+
+public class EclEnvironmentVariableFunction : EclInterpreterFunction
+{
+    public override EclToken Invoke(EclInterpreterContext caller, EclToken[] args)
+    {
+        if(args.Length != 1)throw new ArgumentException("env function requires exactly one argument (variable name).", nameof(args));
+        var varName = ((EclString)args[0]).Value;
+        var varValue = Environment.GetEnvironmentVariable(varName);
+        return EclLiteral.CreateString(varValue ?? string.Empty);
+    }
+}

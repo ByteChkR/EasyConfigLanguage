@@ -39,6 +39,7 @@ class Program
     
     static void Main(string[] args)
     {
+        var env = Environment.GetEnvironmentVariables();
         if(CommandlineSettings.DisplayVersionInfo)
         {
             Logger.Info($"ECL CLI Version: {typeof(Program).Assembly.GetName().Version}");
