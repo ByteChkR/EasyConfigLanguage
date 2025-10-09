@@ -33,7 +33,7 @@ public class EclObject : EclContainer
         {
             if (Parent._properties.TryGetValue(Key, out var value))
             {
-                return value;
+                return value.Dereference(initialValue);;
             }
             if (initialValue != null)
             {

@@ -1,7 +1,6 @@
 using System.CodeDom.Compiler;
-using ecl.core.Tokens;
 
-namespace ecl.lang.Interpreter;
+namespace ecl.core.Tokens;
 
 public class EclTokenReference : EclToken
 {

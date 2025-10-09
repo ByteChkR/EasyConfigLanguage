@@ -1,8 +1,6 @@
-using ecl.core.Tokens;
+namespace ecl.core.Tokens;
 
-namespace ecl.lang.Interpreter;
-
-internal static class EclTokenReferenceExtensions
+public static class EclTokenReferenceExtensions
 {
     public static EclToken Dereference(this EclToken token, EclToken? initialValue = null)
     {

@@ -33,7 +33,7 @@ public class EclArray : EclContainer
             {
                 throw new IndexOutOfRangeException($"Index {Key} is out of range for array with {Parent._values.Count} elements.");
             }
-            return Parent._values[Key];
+            return Parent._values[Key].Dereference(initialValue);
         }
 
         public override void SetValue(EclToken value)
