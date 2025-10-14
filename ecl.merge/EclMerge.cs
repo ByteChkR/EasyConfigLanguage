@@ -2,6 +2,7 @@
 using System.Linq;
 using ecl.core.Tokens;
 using ecl.core.Tokens.Containers;
+using ecl.core.Tokens.Literals;
 
 namespace ecl.merge;
 
@@ -22,7 +23,15 @@ public static class EclMerge
             }
             if (oldValue is EclContainer)
             {
-                MergeInplace(oldValue, newValue);
+                if (newValue is EclNull)
+                {
+                    //Do not merge, just set it to null
+                    first[prop.Key].SetValue(newValue);
+                }
+                else
+                {
+                    MergeInplace(oldValue, newValue);
+                }
             }
             else
             {
